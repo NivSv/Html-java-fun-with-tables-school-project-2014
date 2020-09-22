@@ -1,0 +1,159 @@
+﻿<html>
+<head>
+    <title>niv</title>
+    <script type="text/javascript">
+	    var lmaclick=parseInt(0);// כפתור למעלה
+		var mtaclick=parseInt(0); // כפתור צד
+		var numlma=parseInt(0); // מספר למעלה
+		var nummta=parseInt(0);  // מספר צד
+		var x,y=parseInt(0); // תרגיל
+		var tagi=parseInt(0); // מספר
+        function createtable(row,cell)
+        {
+            var tableData = "<tr><td style='background-color:00FFCC'>*</td>";
+            for (var i = 1; i <= row; i++)
+                {
+                tableData += "<td id:'lmacolor"+i+"' style='background-color:00FFCC'>" + "<input id='lmaa"+i+"' style='background-color:red' value='"+i+"' type='button' onclick='lma("+i+")'/>" + "</td>";
+            }
+            tableData += "</tr>";
+            for (var i = 1; i <= row; i++) {
+                tableData += "<tr><td style='background-color:00FFCC'>" + "<input id='mtaa"+i+"' style='background-color:red' value='"+i+"' type='button' onclick='mta("+i+")'/>" + "</td>";
+                for (var j = 1; j <= cell; j++) {
+                    if (i*j%7==0 || j*i==72 || j*i==27)
+					{
+                        tableData += "<td onclick='tar("+i+","+j+","+j*i+")' id='ms"+i+"s"+j+"' style='background-color:yellow'>" + j * i + "</td>";
+					}
+                    else
+                        tableData += "<td onclick='tar("+i+","+j+","+j*i+")' id='ms"+i+"s"+j+"'>" + j * i + "</td>";
+                }
+                tableData += "</tr>";
+            }
+            document.getElementById("mt").innerHTML = tableData;
+        }
+	    function lma(num)
+		{
+		if(lmaclick==parseInt(0))
+		{
+		numlma = parseInt(num);
+		document.getElementById("lmaa"+num).style.backgroundColor = "00FF33";
+		lmaclick=parseInt(1);
+		if(mtaclick=parseInt(1)&&numlma!=0&&nummta!=0)
+		{
+		document.getElementById("ms"+nummta+"s"+numlma).style.backgroundColor = "00FF33";
+		}
+		}
+		else
+		{
+		for(var i = 1; i <= 10; i++)
+		{
+		document.getElementById("lmaa"+i).style.backgroundColor = "red";	
+		}
+		lmaclick=parseInt(0);
+		numlma = parseInt(0);
+		for(var i = 1; i <= 10; i++)
+		{
+		for(var j = 1; j <= 10; j++)
+		{
+		document.getElementById("ms"+i+"s"+j).style.backgroundColor = "white";
+		if(i*j%7==0 || j*i==72 || j*i==27)
+		{
+		document.getElementById("ms"+i+"s"+j).style.backgroundColor = "yellow";
+		}
+		}
+		}
+		}
+		}
+		function mta(num)
+		{
+		if(mtaclick==parseInt(0))
+		{
+		nummta = parseInt(num);
+		document.getElementById("mtaa"+num).style.backgroundColor = "00FF33";
+		mtaclick=parseInt(1);
+		if(lmaclick==parseInt(1)&&numlma!=0&&nummta!=0)
+		{
+		document.getElementById("ms"+nummta+"s"+numlma).style.backgroundColor = "00FF33";
+		}
+		}
+		else
+		{
+		for(var i = 1; i <= 10; i++)
+		{
+		document.getElementById("mtaa"+i).style.backgroundColor = "red";		
+		}
+		nummta = parseInt(0);
+		mtaclick=parseInt(0);
+		for(var i = 1; i <= 10; i++)
+		{
+		for(var j = 1; j <= 10; j++)
+		{
+		document.getElementById("ms"+i+"s"+j).style.backgroundColor = "white";
+		if(i*j%7==0 || j*i==72 || j*i==27)
+		{
+		document.getElementById("ms"+i+"s"+j).style.backgroundColor = "yellow";
+		}
+		}
+		}
+		}
+		}
+		function tar(row,cell,elem)
+		{
+		tagi++;
+		if(tagi==1) x=elem; 
+		   else y=elem;
+		if(tagi<=2)
+		{
+		document.getElementById("ms"+row+"s"+cell).style.backgroundColor = "87CEFA";
+		}
+		if(tagi==2)
+		{
+		document.getElementById("mt").innerHTML = x+"+"+y+"="+"<input type='text' id='textin'><input type='button' value='Check' onclick='Check(10,10)'>";
+		document.getElementById("V").style.display="none";
+		document.getElementById("X").style.display="none";
+		}
+		}
+		function Check(row,cell)
+		{
+		tagi=0;
+		if(x+y==document.getElementById("textin").value)
+		{
+		document.getElementById("V").style.display="block";
+		}
+		else
+		{
+		document.getElementById("X").style.display="block";
+		}
+		var tableData = "<tr><td style='background-color:00FFCC'>*</td>";
+        for (var i = 1; i <= row; i++)
+        {
+           tableData += "<td id:'lmacolor"+i+"' style='background-color:00FFCC'>" + "<input id='lmaa"+i+"' style='background-color:red' value='"+i+"' type='button' onclick='lma("+i+")'/>" + "</td>";
+        }
+        tableData += "</tr>";
+        for (var i = 1; i <= row; i++) {
+        tableData += "<tr><td style='background-color:00FFCC'>" + "<input id='mtaa"+i+"' style='background-color:red' value='"+i+"' type='button' onclick='mta("+i+")'/>" + "</td>";
+        for (var j = 1; j <= cell; j++) {
+        if (i*j%7==0 || j*i==72 || j*i==27)
+		{
+        tableData += "<td onclick='tar("+i+","+j+","+j*i+")' id='ms"+i+"s"+j+"' style='background-color:yellow'>" + j * i + "</td>";
+		}
+        else
+        tableData += "<td onclick='tar("+i+","+j+","+j*i+")' id='ms"+i+"s"+j+"'>" + j * i + "</td>";
+        }
+            tableData += "</tr>";
+        }
+        document.getElementById("mt").innerHTML = tableData;
+		}
+    </script>
+</head>
+<body>
+    <center>
+        <table id="mt" border="2" width="300" cellpadding="3" cellspacing="2" style="text-align:center"></table>
+		<br>
+		<img src="V.png" alt="Smiley face" height="42" width="42" style="display:none" id="V">
+		<img src="X.png" alt="Smiley face" height="42" width="42" style="display:none" id="X">
+        <script type="text/javascript">
+            createtable(10,10);
+        </script>
+    </center>
+</body>
+</html>
